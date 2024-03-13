@@ -9,9 +9,10 @@
   <body>
     <main>
       <h1>Odin Library</h1>
-      <dialog open>
+      <button class="btn" id="add-new-book">Add new book</button>
+      <dialog class="modal">
         <p>Add a new book</p>
-        <form method="dialog">
+        <form action="" method="dialog" class="form">
           <div class="form-row">
             <label for="book-title">Book title:</label>
             <input
@@ -47,7 +48,7 @@
                 type="radio"
                 name="user-book-read"
                 id="book-read"
-                value="true"
+                value="read"
                 checked
               />
               Yes
@@ -57,10 +58,13 @@
                 type="radio"
                 name="user-book-read"
                 id="book-read"
-                value="false"
+                value="not-read"
               />
               No
             </label>
+          </div>
+          <div class="form-row">
+            <button type="submit" class="btn" id="submit-btn">Submit</button>
           </div>
         </form>
       </dialog>
