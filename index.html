@@ -11,10 +11,10 @@
       <h1>Odin Library</h1>
       <button class="btn" id="add-new-book">Add new book</button>
       <dialog class="modal">
-        <p>Add a new book</p>
         <form action="/" method="dialog" class="form">
+          <p>Add a new book</p>
           <div class="form-row">
-            <label for="book-title">Book title:</label>
+            <label for="book-title">Book title <em>(required)</em></label>
             <input
               type="text"
               name="user-book-title"
@@ -23,7 +23,7 @@
             />
           </div>
           <div class="form-row">
-            <label for="book-author">Book author:</label>
+            <label for="book-author">Book author <em>(required)</em></label>
             <input
               type="text"
               name="user-book-author"
@@ -32,7 +32,7 @@
             />
           </div>
           <div class="form-row">
-            <label for="book-pages">Number of pages:</label>
+            <label for="book-pages">Number of pages <em>(required)</em></label>
             <input
               type="number"
               name="user-book-pages"
@@ -42,7 +42,9 @@
             />
           </div>
           <div class="form-row">
-            <label for="book-read">Have you read the book?</label>
+            <label for="book-read"
+              >Have you read the book? <em>(required)</em></label
+            >
             <label>
               <input
                 type="radio"
@@ -63,7 +65,8 @@
               No
             </label>
           </div>
-          <div class="form-row">
+          <div class="form-row form-btn-container">
+            <button type="button" class="btn" id="close-btn">Close</button>
             <button type="submit" class="btn" id="submit-btn">Submit</button>
           </div>
         </form>
