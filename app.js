@@ -24,11 +24,12 @@ function addBookToLibrary() {
   );
   myLibrary.push(book);
 }
-// TODO: Make modal close after submit and clear the form inputs
-submitBtn.addEventListener("click", () => {
+
+bookForm.addEventListener("submit", (e) => {
   addBookToLibrary();
   bookForm.reset();
 });
+
 addNewBookBtn.addEventListener("click", () => {
   modal.showModal();
 });
