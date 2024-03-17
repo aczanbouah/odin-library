@@ -8,7 +8,6 @@ const bookContainer = document.querySelector(".book-container");
 const bookTitleInput = document.querySelector("#book-title");
 const bookAuthorInput = document.querySelector("#book-author");
 const bookPagesInput = document.querySelector("#book-pages");
-const isBookReadInput = document.querySelector("#book-read");
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -17,18 +16,27 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
+Book.prototype.toggleReadStatus = function () {
+  this.read = !this.read;
+};
+
 function addBookToLibrary() {
+  const isBookReadInput = document.querySelector(
+    'input[name="user-book-read"]:checked'
+  );
+  const isBookRead = isBookReadInput.value === "read";
+
   const book = new Book(
     bookTitleInput.value,
     bookAuthorInput.value,
     bookPagesInput.value,
-    isBookReadInput.value
+    isBookRead
   );
   myLibrary.push(book);
-  createBook();
+  createBook(isBookRead);
 }
 
-function createBook() {
+function createBook(isBookRead) {
   // Create elements
   const bookItem = document.createElement("div");
   const bookTitle = document.createElement("p");
@@ -56,7 +64,7 @@ function createBook() {
   bookItem.appendChild(bookPages);
 
   bookReadStatus.classList.add("read-status");
-  bookReadStatus.innerText = isBookReadInput.value;
+  bookReadStatus.innerText = isBookRead ? "Read" : "Not Read";
   bookItem.appendChild(bookReadStatus);
 
   removeBookBtn.classList.add("btn");
@@ -67,7 +75,13 @@ function createBook() {
   bookBtnContainer.appendChild(removeBookBtn);
 
   readStatusBtn.classList.add("btn");
-  readStatusBtn.innerText = "Mark as read";
+  readStatusBtn.innerText = isBookRead ? "Mark as unread" : "Mark as read";
+  readStatusBtn.addEventListener("click", () => {
+    const book = myLibrary.find((book) => book.title === bookTitle.innerText);
+    book.toggleReadStatus();
+    bookReadStatus.innerText = book.read ? "Read" : "Not Read";
+    readStatusBtn.innerText = book.read ? "Mark as unread" : "Mark as read";
+  });
 
   bookBtnContainer.appendChild(readStatusBtn);
   bookItem.appendChild(bookBtnContainer);
