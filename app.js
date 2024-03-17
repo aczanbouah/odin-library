@@ -5,6 +5,10 @@ const modal = document.querySelector(".modal");
 const bookForm = document.querySelector(".form");
 const modalCloseBtn = document.querySelector("#close-btn");
 const bookContainer = document.querySelector(".book-container");
+const bookTitleInput = document.querySelector("#book-title");
+const bookAuthorInput = document.querySelector("#book-author");
+const bookPagesInput = document.querySelector("#book-pages");
+const isBookReadInput = document.querySelector("#book-read");
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -14,10 +18,6 @@ function Book(title, author, pages, read) {
 }
 
 function addBookToLibrary() {
-  const bookTitleInput = document.querySelector("#book-title");
-  const bookAuthorInput = document.querySelector("#book-author");
-  const bookPagesInput = document.querySelector("#book-pages");
-  const isBookReadInput = document.querySelector("#book-read");
   const book = new Book(
     bookTitleInput.value,
     bookAuthorInput.value,
@@ -28,9 +28,8 @@ function addBookToLibrary() {
   createBook();
 }
 
-// TODO: Make this dynamic
-
 function createBook() {
+  // Create elements
   const bookItem = document.createElement("div");
   const bookTitle = document.createElement("p");
   const bookAuthor = document.createElement("p");
@@ -39,25 +38,37 @@ function createBook() {
   const removeBookBtn = document.createElement("button");
   const readStatusBtn = document.createElement("button");
   const bookBtnContainer = document.createElement("div");
+
+  // Style elements, add content and display them
+
   bookItem.classList.add("book");
   bookBtnContainer.classList.add("book-btn-container");
   bookTitle.classList.add("title");
-  bookTitle.innerText = myLibrary[0].title;
+  bookTitle.innerText = bookTitleInput.value;
   bookItem.appendChild(bookTitle);
+
   bookAuthor.classList.add("author");
-  bookAuthor.innerText = myLibrary[0].author;
+  bookAuthor.innerText = bookAuthorInput.value;
   bookItem.appendChild(bookAuthor);
+
   bookPages.classList.add("pages");
-  bookPages.innerText = `${myLibrary[0].pages} pages`;
+  bookPages.innerText = `${bookPagesInput.value} pages`;
   bookItem.appendChild(bookPages);
+
   bookReadStatus.classList.add("read-status");
-  bookReadStatus.innerText = myLibrary[0].read;
+  bookReadStatus.innerText = isBookReadInput.value;
   bookItem.appendChild(bookReadStatus);
+
   removeBookBtn.classList.add("btn");
   removeBookBtn.innerText = "Remove book";
+  removeBookBtn.addEventListener("click", () => {
+    bookContainer.removeChild(bookItem);
+  });
   bookBtnContainer.appendChild(removeBookBtn);
+
   readStatusBtn.classList.add("btn");
   readStatusBtn.innerText = "Mark as read";
+
   bookBtnContainer.appendChild(readStatusBtn);
   bookItem.appendChild(bookBtnContainer);
   bookContainer.appendChild(bookItem);
