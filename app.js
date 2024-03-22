@@ -71,6 +71,11 @@ function createBook(isBookRead) {
   removeBookBtn.innerText = "Remove book";
   removeBookBtn.addEventListener("click", () => {
     bookContainer.removeChild(bookItem);
+    myLibrary.forEach((e) => {
+      if (bookTitle.innerText === e.title) {
+        myLibrary.splice(myLibrary.indexOf(e), 1);
+      }
+    });
   });
   bookBtnContainer.appendChild(removeBookBtn);
 
