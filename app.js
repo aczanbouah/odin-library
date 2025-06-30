@@ -99,6 +99,11 @@ function storeToLocalStorage() {
   localStorage.setItem("books", stringifiedLibrary);
 }
 
+function retrieveLocalStorage() {
+  const retrievedLibrary = localStorage.getItem("books");
+  return JSON.parse(retrievedLibrary);
+}
+
 bookForm.addEventListener("submit", () => {
   addBookToLibrary();
   bookForm.reset();
