@@ -33,10 +33,11 @@ function addBookToLibrary() {
     isBookRead
   );
   myLibrary.push(book);
-  createBook(isBookRead);
+  storeToLocalStorage();
+  createBook(book);
 }
 
-function createBook(isBookRead) {
+function createBook(book) {
   // Create elements
   const bookItem = document.createElement("div");
   const bookTitle = document.createElement("p");
@@ -52,19 +53,19 @@ function createBook(isBookRead) {
   bookItem.classList.add("book");
   bookBtnContainer.classList.add("book-btn-container");
   bookTitle.classList.add("title");
-  bookTitle.innerText = bookTitleInput.value;
+  bookTitle.innerText = book.title;
   bookItem.appendChild(bookTitle);
 
   bookAuthor.classList.add("author");
-  bookAuthor.innerText = bookAuthorInput.value;
+  bookAuthor.innerText = book.author;
   bookItem.appendChild(bookAuthor);
 
   bookPages.classList.add("pages");
-  bookPages.innerText = `${bookPagesInput.value} pages`;
+  bookPages.innerText = `${book.pages} pages`;
   bookItem.appendChild(bookPages);
 
   bookReadStatus.classList.add("read-status");
-  bookReadStatus.innerText = isBookRead ? "Read" : "Not Read";
+  bookReadStatus.innerText = book.read ? "Read" : "Not Read";
   bookItem.appendChild(bookReadStatus);
 
   removeBookBtn.classList.add("btn");
@@ -76,22 +77,46 @@ function createBook(isBookRead) {
         myLibrary.splice(myLibrary.indexOf(e), 1);
       }
     });
+    storeToLocalStorage();
   });
   bookBtnContainer.appendChild(removeBookBtn);
 
   readStatusBtn.classList.add("btn");
-  readStatusBtn.innerText = isBookRead ? "Mark as unread" : "Mark as read";
+  readStatusBtn.innerText = book.read ? "Mark as unread" : "Mark as read";
   readStatusBtn.addEventListener("click", () => {
     const book = myLibrary.find((book) => book.title === bookTitle.innerText);
     book.toggleReadStatus();
     bookReadStatus.innerText = book.read ? "Read" : "Not Read";
     readStatusBtn.innerText = book.read ? "Mark as unread" : "Mark as read";
+    storeToLocalStorage();
   });
 
   bookBtnContainer.appendChild(readStatusBtn);
   bookItem.appendChild(bookBtnContainer);
   bookContainer.appendChild(bookItem);
 }
+
+function storeToLocalStorage() {
+  const stringifiedLibrary = JSON.stringify(myLibrary);
+  localStorage.setItem("books", stringifiedLibrary);
+}
+
+function retrieveLocalStorage() {
+  const retrievedLibrary = localStorage.getItem("books");
+  return JSON.parse(retrievedLibrary);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  retrieveLocalStorage().forEach((bookInfo) => {
+    const book = new Book(
+      bookInfo.title,
+      bookInfo.author,
+      bookInfo.pages,
+      bookInfo.read
+    );
+    createBook(book);
+  });
+});
 
 bookForm.addEventListener("submit", () => {
   addBookToLibrary();
