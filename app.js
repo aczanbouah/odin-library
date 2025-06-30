@@ -33,6 +33,7 @@ function addBookToLibrary() {
     isBookRead
   );
   myLibrary.push(book);
+  storeToLocalStorage();
   createBook(isBookRead);
 }
 
@@ -91,6 +92,11 @@ function createBook(isBookRead) {
   bookBtnContainer.appendChild(readStatusBtn);
   bookItem.appendChild(bookBtnContainer);
   bookContainer.appendChild(bookItem);
+}
+
+function storeToLocalStorage() {
+  const stringifiedLibrary = JSON.stringify(myLibrary);
+  localStorage.setItem("books", stringifiedLibrary);
 }
 
 bookForm.addEventListener("submit", () => {
